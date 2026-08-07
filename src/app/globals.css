@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Julia Stille — designsystem "Nordisk lyx"
+   Varm off-white, djup grafit, dämpad mässing.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+    /* Ytor */
+    --canvas: 40 26% 96%; /* varm papperston */
+    --surface: 40 30% 99%;
+    --raised: 40 20% 93%;
+    --line: 38 14% 86%;
+
+    /* Text */
+    --ink: 30 10% 12%;
+    --muted: 30 6% 38%;
+    --faint: 30 6% 56%;
+
+    /* Accenter */
+    --brass: 34 46% 42%;
+    --brass-soft: 36 52% 88%;
+    --forest: 158 32% 30%;
+    --clay: 8 54% 48%;
+    --sky: 210 44% 42%;
+
+    --shadow: 30 20% 20%;
+  }
+
+  .dark {
+    --canvas: 30 8% 9%;
+    --surface: 30 8% 12%;
+    --raised: 30 7% 16%;
+    --line: 30 6% 22%;
+
+    --ink: 40 22% 94%;
+    --muted: 38 8% 68%;
+    --faint: 38 6% 50%;
+
+    --brass: 38 58% 62%;
+    --brass-soft: 34 24% 24%;
+    --forest: 158 34% 56%;
+    --clay: 10 62% 62%;
+    --sky: 208 56% 66%;
+
+    --shadow: 0 0% 0%;
+  }
+
+  * {
+    border-color: hsl(var(--line));
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: hsl(var(--canvas));
+    color: hsl(var(--ink));
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background: hsl(var(--brass) / 0.22);
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--brass));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* Scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--line)) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: hsl(var(--line));
+    border-radius: 99px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--faint) / 0.5);
+    background-clip: content-box;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-lg border border-line bg-surface shadow-subtle;
+  }
+
+  .card-pad {
+    @apply p-5 sm:p-6;
+  }
+
+  .label {
+    @apply mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.09em] text-muted;
+  }
+
+  .field {
+    @apply w-full rounded-md border border-line bg-canvas px-3.5 py-2.5 text-sm text-ink
+      placeholder:text-faint transition
+      focus:border-brass focus:outline-none focus:ring-4 focus:ring-brass/12;
+  }
+
+  textarea.field {
+    @apply leading-relaxed;
+  }
+
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-md px-4 py-2.5
+      text-sm font-medium transition-all duration-150 active:scale-[.985]
+      disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-ink text-canvas hover:bg-ink/88 shadow-subtle;
+  }
+
+  .btn-brass {
+    @apply btn bg-brass text-white hover:brightness-110 shadow-subtle;
+  }
+
+  .btn-ghost {
+    @apply btn border border-line bg-surface text-ink hover:bg-raised;
+  }
+
+  .btn-quiet {
+    @apply btn text-muted hover:bg-raised hover:text-ink;
+  }
+
+  .btn-danger {
+    @apply btn border border-clay/30 bg-clay/8 text-clay hover:bg-clay/15;
+  }
+
+  .chip {
+    @apply inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full
+      border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.06em];
+  }
+
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-faint;
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden rounded-md bg-raised;
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full;
+    background: linear-gradient(90deg, transparent, hsl(var(--surface) / 0.75), transparent);
+    animation: shimmer 1.6s infinite;
+  }
+
+  .hairline {
+    @apply h-px w-full bg-line;
+  }
+
+  .grain {
+    background-image: radial-gradient(hsl(var(--ink) / 0.035) 1px, transparent 1px);
+    background-size: 3px 3px;
+  }
+}
+
+@layer utilities {
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
